@@ -25,7 +25,7 @@ class AccountRepositoryTest {
     }
 
     @Test
-    public void shouldSaveAccount() {
+    void shouldSaveAccount() {
         // setup
         when(accountRepository.save(Mockito.any(Account.class)))
                 .thenAnswer(i -> i.getArguments()[0]);

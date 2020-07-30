@@ -24,7 +24,7 @@ class TransactionRepositoryTest {
     }
 
     @Test
-    public void shouldSaveTransaction() {
+    void shouldSaveTransaction() {
         // setup
         when(transactionRepository.save(Mockito.any(Transaction.class)))
                 .thenAnswer(i -> i.getArguments()[0]);
