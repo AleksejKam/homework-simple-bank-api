@@ -13,6 +13,8 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    //implementation 'org.springframework.security:spring-security-test'
 
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.h2database:h2'
@@ -20,9 +22,9 @@ dependencies {
 
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
 
-//    testImplementation('org.springframework.boot:spring-boot-starter-test') {
-//        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-//    }
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
 
 //    testCompile group: 'junit', name: 'junit', version: '4.12'
 
