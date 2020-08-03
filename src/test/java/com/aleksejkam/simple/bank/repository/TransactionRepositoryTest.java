@@ -30,8 +30,8 @@ class TransactionRepositoryTest {
                 .thenAnswer(i -> i.getArguments()[0]);
 
         Transaction transaction = Transaction.builder()
-                .accountId("testUser")
-                .type("deposit")
+                .accountId(101L)
+                .type(Transaction.TransactionType.DEPOSIT)
                 .amount(new BigDecimal(125))
                 .build();
 
@@ -40,8 +40,8 @@ class TransactionRepositoryTest {
 
         // verify
         assertThat(savedTransaction).isNotNull();
-        assertThat(savedTransaction.getAccountId()).isEqualTo("testUser");
-        assertThat(savedTransaction.getType()).isEqualTo("deposit");
+        assertThat(savedTransaction.getAccountId()).isEqualTo(101L);
+        assertThat(savedTransaction.getType()).isEqualTo("DEPOSIT");
         assertThat(savedTransaction.getAmount()).isEqualTo(new BigDecimal(125));
     }
 }
