@@ -1,7 +1,6 @@
 package com.aleksejkam.simple.bank.repository;
 
 import com.aleksejkam.simple.bank.model.Transaction;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -18,10 +17,6 @@ class TransactionRepositoryTest {
 
     @Mock
     private TransactionRepository transactionRepository;
-
-    @BeforeEach
-    void setUp() {
-    }
 
     @Test
     void shouldSaveTransaction() {
@@ -41,7 +36,7 @@ class TransactionRepositoryTest {
         // verify
         assertThat(savedTransaction).isNotNull();
         assertThat(savedTransaction.getAccountId()).isEqualTo(101L);
-        assertThat(savedTransaction.getType()).isEqualTo("DEPOSIT");
+        assertThat(savedTransaction.getType()).isEqualTo(Transaction.TransactionType.DEPOSIT);
         assertThat(savedTransaction.getAmount()).isEqualTo(new BigDecimal(125));
     }
 }
