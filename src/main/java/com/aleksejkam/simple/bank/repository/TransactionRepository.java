@@ -12,7 +12,7 @@ import java.util.List;
  * @author Aleksej Kaminskij
  */
 @Repository
-public interface TransactionRepository extends CrudRepository<Transaction, String> {
+public interface TransactionRepository extends CrudRepository<Transaction, Long> {
 
-    public List<Transaction> findByAccountId(String accountId);
+    List<Transaction> findAllByAccountId(Long accountId);
 }

@@ -10,5 +10,7 @@ import org.springframework.stereotype.Repository;
  * @author Aleksej Kaminskij
  */
 @Repository
-public interface AccountRepository extends CrudRepository<Account, String> {
+public interface AccountRepository extends CrudRepository<Account, Long> {
+
+    Account findAccountByUserId(Long userId);
 }
