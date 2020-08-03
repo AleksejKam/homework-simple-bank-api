@@ -9,6 +9,11 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Transaction Service
+ *
+ * @author Aleksej Kaminskij
+ */
 @Service
 public class TransactionService {
 
@@ -16,20 +21,16 @@ public class TransactionService {
     private TransactionRepository transactionRepository;
 
     public Transaction getTransactionById(Long transactionId) throws NotFoundException {
-       Optional<Transaction> transaction = transactionRepository.findById(transactionId);
+        Optional<Transaction> transaction = transactionRepository.findById(transactionId);
 
-       if(transaction.isPresent()){
-           return transaction.get();
-       }else {
-           throw new NotFoundException("account not found");
-       }
+        if (transaction.isPresent()) {
+            return transaction.get();
+        } else {
+            throw new NotFoundException(String.format("Transaction with id '%d' is not found", transactionId));
+        }
     }
 
     public List<Transaction> getTransactionsByAccountId(Long accountId) {
-        return         transactionRepository.findAllByAccountId(accountId);
-    }
-
-    public Transaction saveTransaction(Transaction transaction){
-        return transactionRepository.save(transaction);
+        return transactionRepository.findAllByAccountId(accountId);
     }
 }
