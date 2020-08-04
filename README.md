@@ -1,19 +1,19 @@
-###### **Simple "banking" application**
+###### **Simple "banking" application:**
 * Client should be able to sign up with email & password
 * Client should be able to deposit money
 * Client should be able to withdraw money
 * Client should be able to see the account balance and statement
 --------------------------
 - run Application
-- application will start with 3 users:
+- application have 3 predefined users:
     - user1:pwd1
     - user2:pwd1
     - user3:pwd1
 - user and password use in Basic Auth
-- authentication isn't saved in session (each request should have Basic Auth)
+- authorization/authentication isn't saved in session (each request should have Basic Auth)
 - each User have one Account with 0 balance 
-
-###### end-points:
+------------------------
+###### **end points:**
 
 - GET - `http://localhost:8080/v1/account`
 - POST - `http://localhost:8080/v1/account/deposit`
