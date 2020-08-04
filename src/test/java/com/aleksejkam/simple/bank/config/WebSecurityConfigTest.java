@@ -28,14 +28,14 @@ public class WebSecurityConfigTest {
 
     @BeforeEach
     void setUp() throws MalformedURLException {
-        base = new URL("http://localhost:" + port + "/account/get-all");
+        base = new URL("http://localhost:" + port + "/v1/account/");
     }
 
     @Test
     public void shouldAuthorizedWithCorrectCredentials()
             throws IllegalStateException {
         // setup
-        restTemplate = new TestRestTemplate("user1", "pwd1");
+        restTemplate = new TestRestTemplate("user3", "pwd1");
 
         // execute
         ResponseEntity<String> response =
@@ -43,7 +43,7 @@ public class WebSecurityConfigTest {
 
         // verify
         assertThat(HttpStatus.OK).isEqualTo(response.getStatusCode());
-        assertTrue(response.getBody().contains("[]"));
+        assertTrue(response.getBody().contains("{\"id\":103,\"userId\":103,\"amount\":0"));
     }
 
     @Test
