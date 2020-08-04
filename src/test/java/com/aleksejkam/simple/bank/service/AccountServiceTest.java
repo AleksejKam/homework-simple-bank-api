@@ -1,21 +1,21 @@
 package com.aleksejkam.simple.bank.service;
 
 import com.aleksejkam.simple.bank.model.Account;
+import com.aleksejkam.simple.bank.model.User;
 import com.aleksejkam.simple.bank.repository.AccountRepository;
+import com.aleksejkam.simple.bank.repository.UserRepository;
+import javassist.NotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 //@RunWith(SpringRunner.class)
@@ -26,6 +26,9 @@ class AccountServiceTest {
     @Mock
     private AccountRepository accountRepository;
 
+    @Mock
+    private UserRepository userRepository;
+
     @InjectMocks
     private AccountService accountService;
 
@@ -34,28 +37,32 @@ class AccountServiceTest {
     }
 
     @Test
-    void shouldSaveAccount() {
+    void shouldFindAccountByUsername() throws NotFoundException {
         // setup
+        User user = new User();
+        user.setId(101L);
+
         Account account = Account.builder()
-                .username("testUser")
-                .lastLogin(LocalDateTime.now())
-                .balance(new BigDecimal(0))
+                .id(10L)
+                .userId(101L)
+                .amount(new BigDecimal(125))
+                .lastUpdate(LocalDateTime.now())
                 .build();
 
-        when(accountRepository.save(account))
-                .thenAnswer(i -> i.getArguments()[0]);
+        when(userRepository.findByUsername("userName"))
+                .thenReturn(user);
+
+        when(accountRepository.findAccountByUserId(101L))
+                .thenReturn(account);
 
         // execute
-        Account savedAccount = accountService.saveAccount(account);
+        Account foundAccount = accountService.findAccountByUsername("userName");
 
         // verify
-        assertThat(savedAccount).isNotNull();
-        assertThat(savedAccount.getUsername()).isEqualTo("testUser");
-        assertThat(savedAccount.getLastLogin()).isBeforeOrEqualTo(LocalDateTime.now());
-        assertThat(savedAccount.getBalance()).isEqualTo(new BigDecimal(0));
-    }
-
-    @Test
-    void shouldFindAllAccount() {
+        assertThat(foundAccount).isNotNull();
+        assertThat(foundAccount.getId()).isEqualTo(10L);
+        assertThat(foundAccount.getUserId()).isEqualTo(101L);
+        assertThat(foundAccount.getAmount()).isEqualTo(new BigDecimal(125));
+        assertThat(foundAccount.getLastUpdate()).isBeforeOrEqualTo(LocalDateTime.now());
     }
 }
