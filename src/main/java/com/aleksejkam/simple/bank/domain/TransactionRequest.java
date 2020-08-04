@@ -9,8 +9,6 @@ import java.math.BigDecimal;
  *
  * @author Aleksej Kaminskij
  */
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
