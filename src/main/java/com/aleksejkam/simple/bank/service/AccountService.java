@@ -11,8 +11,10 @@ import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+
 /**
  * Account Service
  *
@@ -30,7 +32,8 @@ public class AccountService {
     @Autowired
     private UserRepository userRepository;
 
-    public void makeDeposit(Account account, TransactionRequest transactionRequest){
+    @Transactional
+    public Transaction makeDeposit(Account account, TransactionRequest transactionRequest) {
 
         BigDecimal deposit = account.getAmount().add(transactionRequest.getAmount());
 
@@ -47,12 +50,15 @@ public class AccountService {
                 .build();
 
         transactionRepository.save(transaction);
+
+        return transaction;
     }
 
-    public void makeWithdraw(Account account, TransactionRequest transactionRequest) throws NotFoundException {
+    @Transactional
+    public Transaction makeWithdraw(Account account, TransactionRequest transactionRequest) throws NotFoundException {
 
-        if (account.getAmount().compareTo(transactionRequest.getAmount()) < 0){
-            throw new NotFoundException("Not enough money");
+        if (account.getAmount().compareTo(transactionRequest.getAmount()) < 0) {
+            throw new NotFoundException("Not enough funds for Withdraw");
         }
 
         BigDecimal deposit = account.getAmount().subtract(transactionRequest.getAmount());
@@ -70,18 +76,13 @@ public class AccountService {
                 .build();
 
         transactionRepository.save(transaction);
+
+        return transaction;
     }
 
     public Account findAccountByUsername(String userName) throws NotFoundException {
         User user = userRepository.findByUsername(userName);
         Account account = accountRepository.findAccountByUserId(user.getId());
-
-//        accountRepository.find
-//        if (account.isPresent()) {
-//            return account.get();
-//        } else {
-//            throw new NotFoundException("account not found");
-//        }
 
         return account;
     }
