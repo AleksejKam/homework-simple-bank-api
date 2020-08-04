@@ -41,21 +41,21 @@ public class AccountController {
     }
 
     @PostMapping("/deposit")
-    public ResponseEntity<String> makeDeposit(@RequestBody TransactionRequest transactionRequest) throws NotFoundException {
+    public ResponseEntity<Transaction> makeDeposit(@RequestBody TransactionRequest transactionRequest) throws NotFoundException {
         Account account = accountService.findAccountByUsername(getAuthenticatedUserName().get());
 
-        accountService.makeDeposit(account, transactionRequest);
+        Transaction transaction = accountService.makeDeposit(account, transactionRequest);
 
-        return ResponseEntity.ok("Deposit is done");
+        return ResponseEntity.ok(transaction);
     }
 
     @PostMapping("/withdraw")
-    public ResponseEntity<String> makeWithdraw(@RequestBody TransactionRequest transactionRequest) throws NotFoundException {
+    public ResponseEntity<Transaction> makeWithdraw(@RequestBody TransactionRequest transactionRequest) throws NotFoundException {
         Account account = accountService.findAccountByUsername(getAuthenticatedUserName().get());
 
-        accountService.makeWithdraw(account, transactionRequest);
+        Transaction transaction = accountService.makeWithdraw(account, transactionRequest);
 
-        return ResponseEntity.ok("withdraw is done");
+        return ResponseEntity.ok(transaction);
     }
 
     @GetMapping("/transactions")
