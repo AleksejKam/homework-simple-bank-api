@@ -20,6 +20,13 @@ public class TransactionService {
     @Autowired
     private TransactionRepository transactionRepository;
 
+    /**
+     * Get Transaction by transactionId
+     *
+     * @param transactionId
+     * @return founded Transaction
+     * @throws NotFoundException
+     */
     public Transaction getTransactionById(Long transactionId) throws NotFoundException {
         Optional<Transaction> transaction = transactionRepository.findById(transactionId);
 
@@ -30,6 +37,12 @@ public class TransactionService {
         }
     }
 
+    /**
+     * Get All Transactions by accountId
+     *
+     * @param accountId
+     * @return the List of Transactions
+     */
     public List<Transaction> getTransactionsByAccountId(Long accountId) {
         return transactionRepository.findAllByAccountId(accountId);
     }

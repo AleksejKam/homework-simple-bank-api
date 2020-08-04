@@ -32,6 +32,13 @@ public class AccountService {
     @Autowired
     private UserRepository userRepository;
 
+    /**
+     * Make deposit
+     *
+     * @param account
+     * @param transactionRequest amount container
+     * @return executed transaction
+     */
     @Transactional
     public Transaction makeDeposit(Account account, TransactionRequest transactionRequest) {
 
@@ -54,6 +61,14 @@ public class AccountService {
         return transaction;
     }
 
+    /**
+     * Make withdraw
+     *
+     * @param account
+     * @param transactionRequest amount container
+     * @return executed transaction
+     * @throws NotFoundException
+     */
     @Transactional
     public Transaction makeWithdraw(Account account, TransactionRequest transactionRequest) throws NotFoundException {
 
@@ -80,6 +95,13 @@ public class AccountService {
         return transaction;
     }
 
+    /**
+     * Find Account by userName
+     *
+     * @param userName
+     * @return founded Account
+     * @throws NotFoundException
+     */
     public Account findAccountByUsername(String userName) throws NotFoundException {
         User user = userRepository.findByUsername(userName);
         Account account = accountRepository.findAccountByUserId(user.getId());
